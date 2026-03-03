@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }body {
+    height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    animation: fadeIn 2s ease-in-out;
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-weight: 400;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.typing {
+    font-size: 1.2rem;
+    min-height: 60px;
+    margin-bottom: 30px;
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin: 5px;
+}
+
+.music-btn {
+    background: #ff4e50;
+    color: white;
+}
+
+.music-btn:hover {
+    background: #ff1c1f;
+    transform: scale(1.05);
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(30px);} 
+    to {opacity: 1; transform: translateY(0);} 
+}
+
+footer {
+    position: absolute;
+    bottom: 15px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+</style>
+</head>
+<body><div class="container">
+    <h1>🎉 Happy Birthday Bro! 🎂</h1>
+    <h2>You are not alone today ❤️</h2><div class="typing" id="typing"></div>
+
+<button class="btn music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+</div><footer>
+    Made with ❤️ by Your Best Friend
+</footer><audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio><script>
+const lyrics = [
+    "Happy birthday to you... 🎶",
+    "May your dreams come true... ✨",
+    "Even if no one remembers...",
+    "I will always celebrate you! ❤️"
+];
+
+let lineIndex = 0;
+let charIndex = 0;
+let typingElement = document.getElementById("typing");
+
+function typeEffect() {
+    if (charIndex < lyrics[lineIndex].length) {
+        typingElement.innerHTML += lyrics[lineIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect, 50);
+    } else {
+        setTimeout(() => {
+            typingElement.innerHTML = "";
+            charIndex = 0;
+            lineIndex = (lineIndex + 1) % lyrics.length;
+            typeEffect();
+        }, 1500);
+    }
+}
+
+typeEffect();
+
+function toggleMusic() {
+    const music = document.getElementById("bgMusic");
+    const btn = document.querySelector(".music-btn");
+
+    if (music.paused) {
+        music.play();
+        btn.innerHTML = "⏸ Pause Music";
+    } else {
+        music.pause();
+        btn.innerHTML = "🎵 Play Music";
+    }
+}
+
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 5000);
+}
+
+setInterval(createConfetti, 200);
+</script></body>
+</html>
